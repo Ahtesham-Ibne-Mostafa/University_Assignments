@@ -1,0 +1,172 @@
+
+def factorial(x):
+  if x==1:
+    return x
+  else:
+    return(x*factorial(x-1))
+print(factorial(3))
+
+
+
+def fibonacci(x):
+  if x<=1:
+    return x
+  else:
+    return fibonacci(x-1)+fibonacci(x-2)
+print(fibonacci(8))
+
+
+
+def arrayPrint(arr):
+  n=len(arr)
+  if n==0:
+    return
+  else:
+    print(arr[0])
+    arrayPrint(arr[1:])
+arrayPrint([1,2,3,4,5,6,8,7])
+
+
+
+def powerN(x,n):
+  if n==1:
+    return x
+  else:
+    return x*powerN(x,(n-1))
+print(powerN(3,3))
+
+
+
+def findBinary(decimal_number):
+  if decimal_number == 0:
+    return 0
+  else:
+    return (decimal_number % 2 + 10 *findBinary(int(decimal_number // 2)))   
+decimal_number = 16
+print(findBinary(decimal_number))
+
+
+
+class Node:
+  def __init__(self, e, n):
+    self.element = e
+    self.next = n
+
+class LinkedList:
+  def __init__(self, a):       
+    self.head = None
+    tail = self.head
+    if type(a) != Node:
+      for i in range(0,len(a)):
+        if i==0:
+          self.head=Node(a[i],None)
+          tail=self.head
+        else: 
+          temp = Node(a[i],None)
+          tail.next = temp
+          tail = tail.next
+    else:
+      self.head=a
+
+def printer(arr):
+  if arr==None:
+    return 0
+  else:
+    return arr.element+printer(arr.next)
+
+a=[1,2,3,4]
+Li=LinkedList(a)
+print(printer(Li.head))
+
+
+
+class Node:
+  def __init__(self, e, n):
+    self.element = e
+    self.next = n
+
+class LinkedList:
+  def __init__(self, a):       
+    self.head = None
+    tail = self.head
+    if type(a) != Node:
+      for i in range(0,len(a)):
+        if i==0:
+          self.head=Node(a[i],None)
+          tail=self.head
+        else: 
+          temp = Node(a[i],None)
+          tail.next = temp
+          tail = tail.next
+    else:
+      self.head=a
+
+def printer(arr):
+  if arr==None:
+    return None
+  else:
+    printer(arr.next)
+    print(arr.element)
+
+a=[10,20,30,40]
+Li=LinkedList(a)
+printer(Li.head)
+
+
+
+def hocBuilder(floor):
+  if floor==0:
+    return 8
+  else:
+    return 5+hocBuilder(floor-1)
+print(hocBuilder(2))
+
+
+
+def stairs(n):
+  if n==0:
+    return ''
+  else:
+    x=(stairs(n-1))+str(n)
+    print(x)
+    return x
+x=stairs(5)
+
+
+
+def revstair(n,i=0):
+  if n==0:
+    return '',i
+  else:
+    s,i = revstair(n-1,i+1)
+    s += str(n)
+    print(' '*(i-n)+s)
+    return s,i
+x=revstair(5)
+
+
+
+class FinalQ: 
+  def print(self,array,idx): 
+    if(idx<len(array)): 
+      profit = self.calcProfit(array[idx])
+      print(f"Investment: {array[idx]}; Profit: {profit}")
+      self.print(array,idx+1)
+    else:
+      return
+  
+  def calcProfit(self,investment): 
+    if investment<25000:
+      return "Error"
+    elif investment==25000:
+      return 0
+    elif investment<=100000:
+      p = self.calcProfit(25000)+(0.045*(investment-25000))
+      return p
+    else:
+      p = self.calcProfit(100000)+(0.08*(investment-100000))
+      return p
+
+array=[25000,100000,250000,350000] 
+x = FinalQ() 
+x.print(array,0)

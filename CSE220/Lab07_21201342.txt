@@ -1,0 +1,105 @@
+class KeyIndex:
+    def __init__(self, a):
+        max_ = min_ = a[0]
+        for i in range(1,len(a)):
+            if a[i] > max_:
+                max_ = a[i]
+            if a[i] < min_:
+                min_ = a[i]
+        self.min_ = min_
+        self.arr = [0]*(max_-min_+1)
+        
+        i = 0
+        while i<(len(a)):
+            self.arr[a[i]-min_] += 1
+            i+=1
+            
+    def search(self, data):
+        max_ = len(self.arr)+self.min_-1
+        
+        if data>=self.min_ and data<=max_ and self.arr[data-self.min_]>0:
+            return True
+        else:
+            return False
+            
+    def sort(self):
+        arrlen = 0
+        for i in range(len(self.arr)):
+            arrlen+= self.arr[i]
+            
+        arr = [None]*arrlen
+        k = 0
+        for i in range(len(self.arr)):
+            for j in range(self.arr[i]):
+                arr[k] = i+self.min_
+                k+= 1
+        return arr
+    
+def tester(arr):
+    print("--------     Testing     --------\n")
+    print("Given array is     :", arr)
+    a = KeyIndex(arr)
+    print("KeyIndex array is  :", a.arr)
+    print("Minimum value is   :", a.min_)
+    print("Maximum value is   :", len(a.arr)+a.min_-1)
+    k = [a.min_-2,a.min_-1, a.min_, a.min_+1, len(a.arr)+a.min_-1, len(a.arr)+a.min_]
+    for i in range(6):
+        print("Searching for {:>5}:".format(k[i]), end=" ")
+        print(a.search(k[i]))
+    print("Sorting array      :",a.sort()) 
+    print("\n--------     Testing completed     --------\n\n")      
+
+print('::::::::::::::: KeyIndex class test :::::::::::::::\n')
+tester([-5,3,9,2,5,8]) 
+tester([3,8,1,6,3,11,2])    
+
+
+# HAshtable using Linear Probing:
+
+class HashTable:
+    def __init__(self):
+        self.hasharr = [None]*9
+        
+            
+    def push (self,data):
+        hash = self.hashindex(data)
+        if self.hasharr[hash] == None:
+            self.hasharr[hash] = data
+              
+        else:
+            while self.hasharr[hash] != None:
+                hash = (hash+1)%9
+            
+            self.hasharr[hash] = data
+        
+          
+    def hashindex(self, a):
+        cons = 'BCDFGHJKLMNPQRSTVWXYZ'
+        number = '0123456789'
+        count = 0
+        sum_ = 0
+    
+        for i in range(len(a)):
+            if a[i] in cons:
+                count+=1
+            
+            elif a[i] in number:
+                sum_+= int(a[i])
+        return ((count*24)+sum_)%9
+
+def tester(arr):
+    print("--------     Testing     --------\n")
+    print("Given array is :", arr,'\n')
+    y = HashTable()
+    
+    for i in range(len(arr)):
+        print("Pushing item   : {}".format(arr[i]))
+        y.push(arr[i])
+        
+    print("\nHashTable array: ",y.hasharr)
+    print("\n--------     Testing completed     --------\n\n")      
+    
+print('::::::::::::::: HashTable class test :::::::::::::::\n')
+x = ["AT1E89B8A32","BT1E89B8A33","CT1E89B8A34","DT1E89B8A35","ET1E89B8A36","FT1E89B8A37","GT1E89B8A38","HT1E89B8A39","IT1E89B8A40"]
+tester(x) 
+

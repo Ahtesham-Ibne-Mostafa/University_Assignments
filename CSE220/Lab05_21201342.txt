@@ -1,0 +1,143 @@
+# Array
+
+x='1+2]*[3*3+{4–5(6(7/8/9)+10)–11+(12*8)]+14'
+class Stack:
+    def __init__(self,x):
+        self.x=x
+        y=['(',')','{','}','[',']']
+        count=0
+        for i in range(len(x)):
+            for j in range(len(y)):
+                if x[i]==y[j]:
+                    count+=1
+        self.stack=[0]*(count//2)
+        self.indx=[0]*(count//2)
+        self.pointer=-1
+    def push(self,element,idx):
+        self.pointer+=1
+        self.stack[self.pointer]=element
+        self.indx[self.pointer]=idx+1
+    def peek(self):
+        return self.stack[self.pointer]
+    def pop(self):
+        value=self.stack[self.pointer]
+        self.stack[self.pointer]=0
+        self.pointer-=1
+        return value
+    def calc(self):
+        f=True
+        x=['(','{','[']
+        y=[')','}',']']
+        for i in range(len(self.x)):
+            for j in range(len(x)):
+                if self.x[i]==x[j]:
+                    self.push(self.x[i],i)
+            for k in range(len(y)):
+                if self.x[i]==y[k]:
+                    a=self.pop()
+                    if a!=x[k] or a==0:
+                        f=False
+                        error = a
+        if f==True:
+            print('This expression is correct.')
+        else:
+            print('This expression is not correct.')
+            print('Error at character #',self.indx[self.pointer+1],".'",error,"' not closed or opend")
+
+stack1=Stack(x)
+stack1.calc()
+
+
+
+
+# LinkedList
+x='1+2[33+{4–5(6(7/8/9)+10)–11+(12*8)]+14'
+class Node:
+    def __init__(self,elem:any, next)->None:
+        self.elem = elem
+        self.next = next
+
+class Stack:
+    def __init__(self,size:None)->None:
+        
+        self.top = None
+        self.size = 0
+    
+    def push(self,item:any)->None:
+        self.top = Node(item,self.top)
+        self.size+=1
+
+    def pop(self)->any:
+        if self.size != 0:
+            cout = self.top.elem
+            self.top = self.top.next
+            self.size-=1
+            return cout
+        else:
+            return None
+
+    def peek(self)->any: 
+        if self.size != 0:
+            return self.top.elem 
+        return None
+    
+ a = Stack(len(usr))
+b = Stack(len(usr))
+
+op = '[{('
+cl = ']})'
+flag = True
+k = 0
+
+for i in range(0, len(usr)):
+    if usr[i] in op:
+        a.push(usr[i])
+        b.push(i)
+        
+    
+    elif usr[i]  == ']':
+        if a.pop() == '[':
+            b.pop()
+        else:
+            k = i
+            flag = False
+
+            break
+    elif usr[i] == '}':
+        if a.pop() == '{':
+            b.pop()
+        else:
+            k = i
+            flag = False
+
+            break 
+    elif usr[i] == ')':
+        if a.pop() == '(':
+            
+            b.pop()
+        else:
+            k = i
+            flag = False
+
+            break 
+if b.size != 0:
+    flag = False
+
+def check(ch:str)->str:
+    op = '{[('
+    
+    if ch in op:
+        return f'\'{ch}\' - not closed'
+    else:
+        return f'\'{ch}\' - not opened'
+if flag != True:
+    temp = f'{k+1} {check(usr[k])}'
+    if a.size != 0:
+        temp = f'{b.peek()+1} {check(usr[b.peek()])}'
+    print('This expression is NOT correct.')
+    print(f'Error at character #{temp}.')
+
+else:
+    print('This expression is correct.')
+
+
